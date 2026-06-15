@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Messages
+</h2>
+
+<div class="card chat-card p-3">
+
+    {% for user in users %}
+
+        <a
+            href="{% url 'conversation' user.id %}"
+            class="chat-list-item"
+        >
+            {{ user.username }}
+        </a>
+
+    {% empty %}
+
+        <p>No users found.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

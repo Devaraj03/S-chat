@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h4>
+        {{ other_user.username }}
+    </h4>
+
+    <a
+        href="{% url 'users_list' %}"
+        class="btn btn-secondary btn-sm"
+    >
+        Back
+    </a>
+
+</div>
+
+<div class="chat-box mb-3">
+
+    {% for msg in messages %}
+
+        {% if msg.sender == request.user %}
+
+            <div class="sent">
+                {{ msg.text }}
+            </div>
+
+        {% else %}
+
+            <div class="received">
+                {{ msg.text }}
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+<form
+    method="post"
+    action="{% url 'send_message' other_user.id %}"
+>
+
+    {% csrf_token %}
+
+    <div class="input-group">
+
+        <input
+            type="text"
+            name="message"
+            class="form-control"
+            placeholder="Type a message..."
+            required
+        >
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Send
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}
